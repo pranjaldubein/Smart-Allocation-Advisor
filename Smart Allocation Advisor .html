@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Up Bank: Smart Allocation Advisor | Feature Opportunity Brief · Pranjal Dube</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --up-coral: #FF705C;
+    --up-coral-light: #FF8C7A;
+    --up-coral-pale: #FFF0EE;
+    --up-dark: #1A1A2E;
+    --up-navy: #16213E;
+    --up-green: #1ED760;
+    --up-green-pale: #E6FBF0;
+    --up-blue: #4DA6FF;
+    --up-blue-pale: #EBF5FF;
+    --up-yellow: #FFD93D;
+    --up-yellow-pale: #FFFBE6;
+    --up-text: #1A1A2E;
+    --up-muted: #6B6B8A;
+    --up-border: #E8E8F0;
+    --up-bg: #F7F7FC;
+    --up-white: #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--up-bg);
+    color: var(--up-text);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; padding: 0; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--up-dark);
+    padding: 40px 48px 36px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 240px; height: 240px; border-radius: 50%;
+    background: var(--up-coral); opacity: 0.12;
+  }
+  .header::after {
+    content: ''; position: absolute; bottom: -40px; left: 30%;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: var(--up-blue); opacity: 0.08;
+  }
+  .header-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 28px; }
+  .up-logo { display: flex; align-items: center; gap: 10px; }
+  .up-logo-mark {
+    width: 36px; height: 36px; background: var(--up-coral);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; color: white;
+  }
+  .up-logo-text { font-size: 18px; font-weight: 700; color: white; letter-spacing: -0.3px; }
+  .up-logo-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 1px; }
+  .header-meta { text-align: right; }
+  .header-meta .tag {
+    display: inline-block; background: rgba(255,112,92,0.2);
+    border: 1px solid rgba(255,112,92,0.3); color: var(--up-coral-light);
+    font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; margin-bottom: 6px;
+  }
+  .header-meta .date { font-size: 11px; color: rgba(255,255,255,0.4); }
+  .header h1 { font-size: 30px; font-weight: 700; color: white; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 6px; }
+  .header h1 span { color: var(--up-coral); }
+  .header .subtitle { font-size: 14px; color: rgba(255,255,255,0.55); }
+
+  /* ── HYPOTHESIS ── */
+  .hypothesis-wrap { background: var(--up-coral); padding: 24px 48px; }
+  .hypothesis-label { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; color: rgba(255,255,255,0.65); text-transform: uppercase; margin-bottom: 8px; }
+  .hypothesis-text { font-size: 15px; font-weight: 500; color: white; line-height: 1.6; font-style: italic; }
+
+  /* ── EVIDENCE ── */
+  .evidence-wrap { background: var(--up-dark); padding: 20px 48px; display: flex; gap: 16px; align-items: flex-start; }
+  .evidence-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .evidence-label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: rgba(255,255,255,0.45); text-transform: uppercase; margin-bottom: 5px; }
+  .evidence-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.65; }
+  .evidence-text strong { color: white; }
+
+  /* ── BODY ── */
+  .body { padding: 32px 48px; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 32px; }
+  .section-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--up-border); }
+  .section-icon { width: 32px; height: 32px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .icon-coral { background: var(--up-coral-pale); }
+  .icon-blue { background: var(--up-blue-pale); }
+  .icon-green { background: var(--up-green-pale); }
+  .icon-purple { background: #F0EEFF; }
+  .section-title { font-size: 13px; font-weight: 700; color: var(--up-text); letter-spacing: 0.3px; text-transform: uppercase; }
+  .section-sub { font-size: 11px; color: var(--up-muted); text-transform: none; letter-spacing: 0; }
+
+  /* ── TABLES ── */
+  .brief-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; border: 1px solid var(--up-border); margin-bottom: 12px; }
+  .brief-table tr:nth-child(even) td { background: #FAFAFA; }
+  .brief-table tr:nth-child(even) td:first-child { background: #F3F3F8; }
+  .brief-table td { padding: 13px 16px; vertical-align: top; border-bottom: 1px solid var(--up-border); font-size: 13px; line-height: 1.6; }
+  .brief-table tr:last-child td { border-bottom: none; }
+  .brief-table td:first-child { width: 170px; font-weight: 600; color: var(--up-coral); font-size: 12px; background: var(--up-coral-pale); }
+  .brief-table td ul { padding-left: 16px; margin: 4px 0; }
+  .brief-table td ul li { margin-bottom: 4px; font-size: 13px; }
+  .brief-table td p { margin-bottom: 6px; }
+  .brief-table td p:last-child { margin-bottom: 0; }
+
+  .stake-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; border: 1px solid var(--up-border); margin-bottom: 12px; }
+  .stake-table th { background: var(--up-dark); color: white; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 11px 16px; text-align: left; }
+  .stake-table th:first-child { width: 100px; }
+  .stake-table td { padding: 13px 16px; vertical-align: top; border-bottom: 1px solid var(--up-border); font-size: 13px; line-height: 1.6; }
+  .stake-table tr:last-child td { border-bottom: none; }
+  .stake-table tr:nth-child(even) td { background: #FAFAFA; }
+  .stake-table td:first-child { background: var(--up-coral-pale); color: var(--up-coral); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  /* ── METRICS ── */
+  .metrics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 4px; }
+  .metric-card { background: var(--up-white); border: 1px solid var(--up-border); border-radius: 12px; padding: 14px 16px; border-top: 3px solid var(--up-coral); }
+  .metric-value { font-size: 22px; font-weight: 700; color: var(--up-coral); font-family: 'DM Mono', monospace; line-height: 1; margin-bottom: 4px; }
+  .metric-label { font-size: 11px; color: var(--up-muted); line-height: 1.4; }
+  .metric-time { font-size: 10px; color: var(--up-coral); font-weight: 500; margin-top: 4px; }
+
+  /* ── CALLOUT ── */
+  .callout { background: var(--up-coral-pale); border-left: 3px solid var(--up-coral); border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 10px 0 0; font-size: 13px; font-style: italic; line-height: 1.6; }
+
+  /* ── NON-GOALS ── */
+  .nongoal-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--up-border); }
+  .nongoal-row:last-child { border-bottom: none; }
+  .nongoal-x { width: 18px; height: 18px; border-radius: 50%; background: var(--up-coral-pale); color: var(--up-coral); font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .nongoal-text { font-size: 13px; line-height: 1.6; }
+
+  .note { font-size: 12px; color: var(--up-muted); font-style: italic; margin-bottom: 6px; }
+
+  /* ── PROTOTYPE SECTION ── */
+  .proto-section { background: var(--up-dark); padding: 32px 48px; }
+  .proto-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .proto-icon { width: 32px; height: 32px; border-radius: 9px; background: rgba(255,112,92,0.2); display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .proto-title { font-size: 13px; font-weight: 700; color: white; letter-spacing: 0.3px; text-transform: uppercase; }
+  .proto-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .proto-wrap { display: flex; gap: 40px; align-items: flex-start; }
+  .proto-phone-wrap { flex-shrink: 0; }
+
+  /* Phone */
+  .phone { width: 280px; background: #f2f2f7; border-radius: 36px; border: 1px solid rgba(255,255,255,0.1); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .sbar { background: #ff6b35; padding: 10px 18px 7px; display: flex; justify-content: space-between; }
+  .sbar span { color: #fff; font-size: 10px; font-weight: 600; font-family: 'DM Mono', monospace; }
+  .pdots { display: flex; justify-content: center; gap: 6px; padding: 10px 0 4px; background: #f2f2f7; }
+  .pdot { width: 6px; height: 6px; border-radius: 50%; background: #ddd; transition: background .2s; }
+  .pdot.on { background: #ff6b35; }
+  .plbl { text-align: center; font-size: 10px; color: #999; padding-bottom: 8px; background: #f2f2f7; font-weight: 500; }
+  .pscr { display: none; }
+  .pscr.on { display: block; }
+  .hbal { background: #ff6b35; padding: 18px; text-align: center; }
+  .hbal .t { color: rgba(255,255,255,.75); font-size: 10px; margin-bottom: 3px; letter-spacing: .3px; }
+  .hbal .a { color: #fff; font-size: 26px; font-weight: 600; font-family: 'DM Mono', monospace; }
+  .uhdr { background: #ff6b35; padding: 14px 18px 18px; }
+  .uhdr h2 { color: #fff; font-size: 15px; font-weight: 600; }
+  .uhdr p { color: rgba(255,255,255,.8); font-size: 11px; margin-top: 2px; }
+  .pbody { padding: 14px; background: #f2f2f7; }
+  .pcard { background: #fff; border-radius: 14px; padding: 13px; margin-bottom: 10px; border: .5px solid #e5e5ea; }
+  .pcard h3 { font-size: 13px; font-weight: 600; color: #1c1c1e; margin-bottom: 4px; }
+  .pcard p { font-size: 11px; color: #6c6c70; line-height: 1.5; }
+  .acard { background: #fff; border-radius: 14px; padding: 13px; margin-bottom: 10px; border: .5px solid #e5e5ea; }
+  .arow2 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .aname { font-size: 12px; font-weight: 600; color: #1c1c1e; }
+  .aamount { font-size: 17px; font-weight: 600; color: #1c1c1e; font-family: 'DM Mono', monospace; }
+  .asub { font-size: 10px; color: #8e8e93; margin-top: 2px; }
+  .ptg { font-size: 10px; padding: 2px 7px; border-radius: 6px; font-weight: 600; }
+  .ptg.g { background: #e8f8ef; color: #1a7a45; }
+  .ptg.b { background: #e8f2ff; color: #1a4f8a; }
+  .palert { background: #fff5f0; border: .5px solid #ffd5c0; border-radius: 12px; padding: 10px 12px; display: flex; gap: 8px; margin-bottom: 10px; }
+  .patext { font-size: 11px; color: #7a3b1e; line-height: 1.5; }
+  .palink { color: #ff6b35; font-weight: 600; cursor: pointer; text-decoration: underline; }
+  .pbar { height: 9px; border-radius: 5px; background: #f2f2f7; overflow: hidden; display: flex; margin: 10px 0 7px; }
+  .pfs { background: #4da6ff; border-radius: 5px 0 0 5px; }
+  .pgs { background: #2ecc71; border-radius: 0 5px 5px 0; }
+  .pleg { display: flex; gap: 12px; }
+  .pli { display: flex; align-items: center; gap: 5px; font-size: 10px; color: #6c6c70; }
+  .pld { width: 7px; height: 7px; border-radius: 50%; }
+  .prrow { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: .5px solid #f2f2f7; }
+  .prrow:last-child { border-bottom: none; }
+  .prl { font-size: 11px; color: #6c6c70; }
+  .prv { font-size: 12px; font-weight: 600; color: #1c1c1e; }
+  .pirow { display: flex; gap: 7px; margin-bottom: 7px; align-items: flex-start; }
+  .pit { font-size: 10px; color: #6c6c70; line-height: 1.5; }
+  .pcc { width: 48px; height: 48px; border-radius: 50%; background: #e8f8ef; display: flex; align-items: center; justify-content: center; margin: 10px auto 10px; }
+  .pct { font-size: 15px; font-weight: 600; color: #1c1c1e; text-align: center; margin-bottom: 4px; }
+  .pcs { font-size: 11px; color: #6c6c70; text-align: center; line-height: 1.6; margin-bottom: 10px; }
+  .pchip { display: inline-flex; align-items: center; background: #f2f2f7; border: .5px solid #e5e5ea; border-radius: 20px; padding: 4px 9px; font-size: 10px; color: #6c6c70; margin: 3px 2px; }
+  .pbtn { width: 100%; padding: 12px; border-radius: 13px; background: #ff6b35; color: #fff; font-size: 13px; font-weight: 600; border: none; cursor: pointer; margin-top: 4px; display: block; font-family: 'DM Sans', sans-serif; }
+  .pgbtn { width: 100%; padding: 10px; border-radius: 13px; background: transparent; color: #6c6c70; font-size: 12px; border: 1.5px solid #e5e5ea; cursor: pointer; margin-top: 7px; display: block; font-family: 'DM Sans', sans-serif; }
+  .pstitle { font-size: 12px; font-weight: 600; color: #1c1c1e; margin-bottom: 8px; }
+
+  /* Proto sidebar */
+  .proto-sidebar { flex: 1; }
+  .proto-flow { display: flex; flex-direction: column; gap: 12px; }
+  .flow-step {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 14px 16px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .flow-step.active {
+    background: rgba(255,112,92,0.15);
+    border-color: rgba(255,112,92,0.4);
+  }
+  .flow-step:hover { background: rgba(255,255,255,0.08); }
+  .flow-step.active:hover { background: rgba(255,112,92,0.2); }
+  .flow-num { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .flow-step.active .flow-num { color: var(--up-coral); }
+  .flow-name { font-size: 13px; font-weight: 600; color: white; margin-bottom: 3px; }
+  .flow-desc { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+  .flow-step.active .flow-desc { color: rgba(255,255,255,0.7); }
+  .flow-arrow { display: flex; justify-content: center; color: rgba(255,255,255,0.2); font-size: 14px; }
+  .proto-note { margin-top: 16px; font-size: 11px; color: rgba(255,255,255,0.35); line-height: 1.6; font-style: italic; }
+
+  /* ── APPENDIX ── */
+  .appendix { background: #111124; padding: 24px 48px; }
+  .appendix-title { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: rgba(255,255,255,0.35); text-transform: uppercase; margin-bottom: 12px; }
+  .ref-link { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+  .ref-num { width: 20px; height: 20px; border-radius: 50%; background: var(--up-coral); color: white; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ref-text { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+  .ref-text a { color: var(--up-coral-light); }
+
+  /* ── FOOTER ── */
+  .footer { background: var(--up-coral); padding: 16px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-left { font-size: 12px; color: rgba(255,255,255,0.9); font-weight: 600; }
+  .footer-right { font-size: 11px; color: rgba(255,255,255,0.65); }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="up-logo">
+        <div class="up-logo-mark">Up</div>
+        <div>
+          <div class="up-logo-text">Ferocia / Up Bank</div>
+          <div class="up-logo-sub">Senior Product Manager Application · Pranjal Dube</div>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="tag">Feature Opportunity Brief</div>
+        <div class="date">May 2026</div>
+      </div>
+    </div>
+    <h1>Smart Allocation <span>Advisor</span></h1>
+    <div class="subtitle">Personalised Flow/Grow Split with Behavioural Buffer · Feature Opportunity Brief</div>
+  </div>
+
+  <!-- HYPOTHESIS -->
+  <div class="hypothesis-wrap">
+    <div class="hypothesis-label">Feature Hypothesis</div>
+    <div class="hypothesis-text">"We believe adding personalised Flow/Grow allocation recommendations; based on past spending behaviour + a 10% liquidity buffer; will help active Grow Saver users avoid unnecessary withdrawals and interest rate reduction, leading to a 3% reduction in Grow withdrawals and an increase in bonus rate eligibility from 20% to 25% within 9 months."</div>
+  </div>
+
+  <!-- EVIDENCE -->
+  <div class="evidence-wrap">
+    <div class="evidence-icon">🔍</div>
+    <div>
+      <div class="evidence-label">Evidence Statement</div>
+      <div class="evidence-text">I noticed that withdrawing from Grow Saver reduces the interest rate from <strong>4.85% to 1.85%</strong>, making it difficult to use savings for everyday purchases without losing benefits. Play Store reviews (sampled May 2026): <strong>10 of 22 two-star</strong> and <strong>11 of 20 three-star</strong> reviews explicitly mention confusion with the Grow and Flow structure; confirmed by sentiment in r/upbanking and r/AusFinance. Given Grow & Flow is the <strong>default structure for all 1.25M users</strong>, this is systemic; not isolated. Since launch in September 2025, Grow & Flow has driven <strong>~$190M in additional deposit growth</strong> (Bendigo Bank investor presentation, Dec 2025, Page 33), making this friction a direct risk to a core business driver.</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- SECTION A -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-coral">🎯</div>
+        <div>
+          <div class="section-title">Section A; Strategic Fit</div>
+          <div class="section-sub">What is the business context for this feature?</div>
+        </div>
+      </div>
+      <table class="brief-table">
+        <tr>
+          <td>Mission & Vision</td>
+          <td>Up aims to move Australians from financial stress to confidence and empowerment. The current Grow/Flow design penalises users during real-life financial needs; creating friction in adopting the very habits Up is built to nurture. This feature makes saving behaviour more adaptive and sustainable, helping users stay in the system rather than abandoning it.</td>
+        </tr>
+        <tr>
+          <td>Company Strategy</td>
+          <td>Up's deposit base grew <strong>36% YoY to $3.5B</strong> (Dec 2025), with Grow & Flow directly driving ~$190M in additional deposit growth since its September 2025 launch (Bendigo Bank investor presentation, Dec 2025). Negative UX experiences risk withdrawal behaviour that directly threatens this trajectory. This feature protects the deposit growth engine by reducing friction in the core savings UX.</td>
+        </tr>
+        <tr>
+          <td>Product Strategy</td>
+          <td>
+            <p>Up is <strong>product-led</strong>: the product is the growth engine, not a sales tool. In a product-led company, features must be intrinsically valuable enough to drive adoption without a sales team. This shapes the feature's approach: the recommendation must be so clearly useful that users act on it immediately, with no friction and no hand-holding required.</p>
+            <p>The current Grow/Flow design relies on rigid rules that penalise users during real-life spending. This feature aligns with Up's behaviour-driven strategy by introducing personalised allocation nudges based on spending patterns; reducing cognitive burden while preserving the existing product structure.</p>
+            <p><strong>Competitor context:</strong> Neobanks like Macquarie and AMP Bank offer flexible savings without withdrawal penalties, while traditional banks lack behavioural nudges. Up's strength is behaviour-driven design; this feature reduces the friction competitors avoid while retaining that advantage.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Team Goals</td>
+          <td>
+            <p style="font-size:13px;margin-bottom:10px;">Grow & Flow is Bendigo Bank's headline digital deposit driver; 36% YoY deposit growth and $190M incremental growth are the public metrics the team is accountable to. From this, three team-level OKRs can be derived with evidence-based rationale:</p>
+            <table style="width:100%;border-collapse:collapse;font-size:12px;">
+              <tr style="background:var(--up-coral-pale);">
+                <td style="padding:8px 10px;font-weight:600;color:var(--up-coral);width:200px;border-bottom:1px solid var(--up-border);">OKR</td>
+                <td style="padding:8px 10px;font-weight:600;color:var(--up-coral);border-bottom:1px solid var(--up-border);">Target</td>
+                <td style="padding:8px 10px;font-weight:600;color:var(--up-coral);border-bottom:1px solid var(--up-border);">Derivation</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--up-border);">
+                <td style="padding:8px 10px;font-weight:500;">Protect deposit retention</td>
+                <td style="padding:8px 10px;">−3% Grow withdrawals in 6mo</td>
+                <td style="padding:8px 10px;color:var(--up-muted);">Withdrawal friction is the primary risk to the $190M deposit gain. A 3% reduction is a conservative passive-nudge target.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--up-border);">
+                <td style="padding:8px 10px;font-weight:500;">Increase sustained balances</td>
+                <td style="padding:8px 10px;">Avg Grow balance trend for adopters</td>
+                <td style="padding:8px 10px;color:var(--up-muted);">Baseline to be established from internal data pre-launch. Target set once baseline is confirmed.</td>
+              </tr>
+              <tr>
+                <td style="padding:8px 10px;font-weight:500;">Improve eligibility rate</td>
+                <td style="padding:8px 10px;">20%→25% bonus rate eligibility in 9mo</td>
+                <td style="padding:8px 10px;color:var(--up-muted);">Play Store reviews confirm a significant proportion of users lose eligibility through avoidable withdrawals. 20% assumed baseline; 25% target reflects a 5pp lift from nudge adoption. Requires internal validation.</td>
+              </tr>
+            </table>
+            <div class="callout">These OKRs ladder directly to Bendigo Bank's stated deposit growth priority; protecting the $190M Grow & Flow contribution is the single most defensible business case for this feature.</div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SECTION B -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-blue">👤</div>
+        <div>
+          <div class="section-title">Section B; User Value</div>
+          <div class="section-sub">Who is this for and what do they need?</div>
+        </div>
+      </div>
+      <table class="brief-table">
+        <tr>
+          <td>Demographics</td>
+          <td>Gen Z users (18–30), students or early-career professionals earning under $100k, often living in shared accommodations.</td>
+        </tr>
+        <tr>
+          <td>Behaviour</td>
+          <td>Mobile-first users subject to the Grow/Flow default savings structure. Frequent discretionary spending with limited financial buffer, requiring short-term liquidity while attempting to maximise savings. <strong>All 1.25M active Upsiders are affected</strong>: Grow & Flow is the default structure, not an opt-in.</td>
+        </tr>
+      </table>
+      <table class="brief-table">
+        <tr>
+          <td>Problem Area</td>
+          <td>Accessing savings without losing the Grow bonus interest rate creates decision friction for users when making everyday purchases.</td>
+        </tr>
+        <tr>
+          <td>Signal</td>
+          <td>Withdrawing from Grow Saver drops the rate from 4.85% to 1.85%; creating hesitation. Confirmed by Play Store reviews (sampled May 2026): 10 of 22 two-star and 11 of 20 three-star reviews cite confusion with Grow & Flow mechanics. Echoed in r/upbanking and r/AusFinance. Since Grow & Flow is the default for all 1.25M users, the friction is systemic.</td>
+        </tr>
+        <tr>
+          <td>Severity</td>
+          <td><strong style="color:var(--up-coral)">High</strong>: Directly impacts users' ability to access their own savings, leading to avoidance behaviour (keeping funds in Flow, relying on credit) and potential churn to more flexible alternatives.</td>
+        </tr>
+        <tr>
+          <td># Affected</td>
+          <td>Grow & Flow applies to all 1.25M Upsiders by default. Every withdrawal from Grow reverts the rate to 1.85%. The structural risk is portfolio-wide. Exact active Grow usage rates require internal validation.</td>
+        </tr>
+        <tr>
+          <td>Alternatives</td>
+          <td>Users currently keep funds in Flow (sacrificing 4.85% entirely), rely on credit cards, or delay purchases to avoid losing savings benefits.</td>
+        </tr>
+      </table>
+      <table class="brief-table">
+        <tr>
+          <td>Qualitative Win</td>
+          <td>Users can confidently make everyday purchases without manually calculating the impact on their savings. The app does the thinking for them, and their saving behaviour stays intact.</td>
+        </tr>
+        <tr>
+          <td>Quantitative Win</td>
+          <td>
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-value">10–15%</div>
+                <div class="metric-label">Recommendation adoption among active Grow Saver users</div>
+                <div class="metric-time">Within 30 days of launch</div>
+                <div style="margin-top:8px;font-size:10px;color:var(--up-muted);line-height:1.5;border-top:1px solid var(--up-border);padding-top:7px;">
+                  <strong style="color:var(--up-text)">Rationale:</strong> Fintech app 30-day activation benchmarks sit at 14% (CleverTap, 2024). Up's NPS of +56.3 (RFI Global, 2025) and mobile-first, high-engagement user base justify targeting the higher end of this range. Passive nudge with no incentive; 10% is conservative, 15% is aspirational.
+                </div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value">−3%</div>
+                <div class="metric-label">Reduction in Grow Saver withdrawals</div>
+                <div class="metric-time">Within 6 months</div>
+                <div style="margin-top:8px;font-size:10px;color:var(--up-muted);line-height:1.5;border-top:1px solid var(--up-border);padding-top:7px;">
+                  <strong style="color:var(--up-text)">Rationale:</strong> Academic research on passive financial nudges (PNAS, 2025; Thaler & Benartzi Save More Tomorrow) shows modest but measurable behaviour change; typically under 5% for non-automated interventions. 3% is deliberately conservative. Automated features drive larger shifts (savings rates 3.5%→13.6% over 40 months), but this feature is a passive nudge only.
+                </div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-value">TBD</div>
+                <div class="metric-label">Avg Grow balance trend (adopters)</div>
+                <div class="metric-time">Tracked post-launch</div>
+                <div style="margin-top:8px;font-size:10px;color:var(--up-muted);line-height:1.5;border-top:1px solid var(--up-border);padding-top:7px;">
+                  <strong style="color:var(--up-text)">Rationale:</strong> Baseline to be established from internal Grow Saver balance data pre-launch. A user acting on the recommendation moves materially more into Grow; the prototype scenario illustrates the mechanic. Target set once baseline is confirmed and partial adoption rates are observable.
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>Non-Goals</td>
+          <td>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text">Not an automated rebalancing tool; users retain full control at all times</div></div>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text">Not a full financial planning or budgeting system</div></div>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text">Not a redesign of the Grow/Flow interest rate mechanics; this is a product constraint</div></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- SECTION C -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-green">📈</div>
+        <div>
+          <div class="section-title">Section C; Business Value</div>
+          <div class="section-sub">What is the expected business impact?</div>
+        </div>
+      </div>
+      <table class="stake-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Decision Makers <span style="opacity:.5;font-weight:400">(formal sign-off before dev begins)</span></th>
+            <th>Informed Group <span style="opacity:.5;font-weight:400">(need context, not approval)</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Role 1</td>
+            <td><strong>Head of Product / CPO</strong>: strategic sign-off; owns feature prioritisation and roadmap alignment</td>
+            <td><strong>Head of Marketing</strong>: determines whether feature warrants external announcement or in-app messaging only</td>
+          </tr>
+          <tr>
+            <td>Role 2</td>
+            <td><strong>Engineering Lead</strong>: feasibility sign-off; confirms behavioural analysis and recommendation logic is buildable within current infrastructure</td>
+            <td><strong>Head of Customer Support</strong>: owns FAQ creation and team training before launch</td>
+          </tr>
+          <tr>
+            <td>Role 3</td>
+            <td><strong>Head of Legal, Risk & Compliance</strong>: confirms recommendation framing does not constitute financial advice under ASIC guidelines; complies with the Australian Privacy Act</td>
+            <td><strong>Head of Finance</strong>: tracks deposit balance impact and monitors whether Grow withdrawal reduction aligns with balance sheet projections</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="brief-table">
+        <tr>
+          <td>Qualitative Impact</td>
+          <td>
+            <p>By helping users avoid the Grow penalty trap, Up protects its deposits and NPS; the referral engine that drives deposit growth and low-cost customer acquisition. <strong>Up becomes the bank that actively helps Gen Z manage their money</strong>, not one that penalises them for using it.</p>
+            <p>Stronger user trust improves retention and sustained deposit balances, reinforcing Up's core growth loop without requiring additional customer acquisition spend.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>Quantitative Impact</td>
+          <td>
+            <ul>
+              <li>Recommendation adoption: <strong>10–15%</strong> of active Grow Saver users within 30 days <span style="font-size:11px;color:var(--up-muted)">aligned to fintech 30-day activation benchmarks (CleverTap, 2024); Up's +56.3 NPS justifies the higher end</span></li>
+              <li>Reduce Grow Saver withdrawal rate by <strong>3%</strong> within 6 months <span style="font-size:11px;color:var(--up-muted)">conservative passive-nudge target consistent with academic research on non-automated financial behaviour change</span></li>
+              <li>Avg Grow Saver balance trend for recommendation adopters: <strong>TBD</strong> <span style="font-size:11px;color:var(--up-muted)">baseline to be established from internal data pre-launch; target set once baseline confirmed. Directly protects the $190M Grow & Flow deposit contribution.</span></li>
+              <li>Increase % of active Grow Saver users maintaining bonus rate eligibility from <strong>20% → 25%</strong> within 9 months <span style="font-size:11px;color:var(--up-muted)">20% assumed baseline pending internal validation; 5pp lift from nudge adoption over 9 months</span></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Non-Goals</td>
+          <td>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text"><strong>Do not measure by NPS or referral growth</strong> as primary metrics; the causal chain is too indirect. These may move as lagging indicators but cannot be attributed to this feature alone.</div></div>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text"><strong>Do not measure by home loan applications or disbursements</strong>: this is a deposit retention play with no influence on lending behaviour.</div></div>
+            <div class="nongoal-row"><div class="nongoal-x">✕</div><div class="nongoal-text"><strong>Do not optimise for credit product uptake or new customer acquisition</strong>: this feature serves existing users only.</div></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PROTOTYPE SECTION -->
+  <div class="proto-section">
+    <div class="proto-header">
+      <div class="proto-icon">📱</div>
+      <div>
+        <div class="proto-title">Section D; Feature Prototype</div>
+        <div class="proto-sub">Interactive flow; click through all 4 screens</div>
+      </div>
+    </div>
+    <div class="proto-wrap">
+
+      <!-- Phone -->
+      <div class="proto-phone-wrap">
+        <div class="phone">
+          <div class="sbar"><span>9:41</span><span>Up</span><span>●●●</span></div>
+          <div class="pdots">
+            <div class="pdot on" id="d0"></div>
+            <div class="pdot" id="d1"></div>
+            <div class="pdot" id="d2"></div>
+            <div class="pdot" id="d3"></div>
+          </div>
+          <div class="plbl" id="plbl">Screen 1 of 4: Home</div>
+
+          <!-- Screen 1 -->
+          <div class="pscr on" id="ps0">
+            <div class="hbal"><div class="t">TOTAL BALANCE</div><div class="a">$3,842.00</div></div>
+            <div class="pbody">
+              <div class="palert">
+                <div style="font-size:14px;flex-shrink:0">💡</div>
+                <div class="patext">Salary of <strong>$2,400</strong> received. Flow looks higher than usual. <span class="palink" onclick="pgo(1)">See allocation tip →</span></div>
+              </div>
+              <div class="acard"><div class="arow2"><span class="aname">Flow</span><span class="ptg b">1.85% p.a.</span></div><div class="aamount">$2,842.00</div><div class="asub">Everyday spending</div></div>
+              <div class="acard"><div class="arow2"><span class="aname">Grow</span><span class="ptg g">4.85% p.a.</span></div><div class="aamount">$1,000.00</div><div class="asub">High interest savings</div></div>
+              <button class="pbtn" onclick="pgo(1)">See smart allocation tip</button>
+            </div>
+          </div>
+
+          <!-- Screen 2 -->
+          <div class="pscr" id="ps1">
+            <div class="uhdr"><h2>Smart allocation tip</h2><p>Based on your last 3 months</p></div>
+            <div class="pbody">
+              <div class="pcard"><h3>Your suggested split</h3><p style="margin-bottom:10px">Keep enough in Flow for expenses, earn more on the rest.</p>
+                <div class="pbar"><div class="pfs" style="width:35%"></div><div class="pgs" style="width:65%"></div></div>
+                <div class="pleg"><div class="pli"><div class="pld" style="background:#4da6ff"></div>Flow $1,350</div><div class="pli"><div class="pld" style="background:#2ecc71"></div>Grow $2,492</div></div>
+              </div>
+              <div class="pcard">
+                <div class="prrow"><div class="prl">Avg monthly spend (3mo)</div><span class="ptg b">$1,228</span></div>
+                <div class="prrow"><div class="prl">Suggested Flow buffer (+10%)</div><span class="ptg b">$1,350</span></div>
+                <div class="prrow"><div class="prl">Move to Grow</div><span class="ptg g">$1,492</span></div>
+              </div>
+              <button class="pbtn" onclick="pgo(2)">Review &amp; confirm</button>
+              <button class="pgbtn" onclick="pgo(0)">Not now</button>
+            </div>
+          </div>
+
+          <!-- Screen 3 -->
+          <div class="pscr" id="ps2">
+            <div class="uhdr"><h2>Review transfer</h2><p>You can adjust this any time</p></div>
+            <div class="pbody">
+              <div class="pcard">
+                <div class="prrow"><div class="prl">From</div><div class="prv">Flow account</div></div>
+                <div class="prrow"><div class="prl">To</div><div class="prv">Grow saver</div></div>
+                <div class="prrow"><div class="prl">Amount</div><div class="prv" style="color:#2ecc71;font-size:16px">$1,492.00</div></div>
+                <div class="prrow"><div class="prl">Flow remaining</div><div class="prv">$1,350.00</div></div>
+                <div class="prrow"><div class="prl">New Grow balance</div><div class="prv">$2,492.00</div></div>
+              </div>
+              <div class="pcard">
+                <div class="pstitle">Why this amount?</div>
+                <div class="pirow"><div style="font-size:12px;flex-shrink:0">📊</div><div class="pit">Avg spend $1,228/mo; we added a 10% buffer for higher-spend months.</div></div>
+                <div class="pirow"><div style="font-size:12px;flex-shrink:0">💸</div><div class="pit">$2,492 in Grow earns ~$120/year more than in Flow at current rates.</div></div>
+              </div>
+              <button class="pbtn" onclick="pgo(3)">Confirm transfer</button>
+              <button class="pgbtn" onclick="pgo(1)">← Edit split</button>
+            </div>
+          </div>
+
+          <!-- Screen 4 -->
+          <div class="pscr" id="ps3">
+            <div class="uhdr"><h2>All done ✓</h2><p>Your money is working harder</p></div>
+            <div class="pbody" style="text-align:center">
+              <div class="pcc">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1a7a45" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="pct">$1,492 moved to Grow</div>
+              <div class="pcs">Earning 4.85% p.a. on $2,492.<br>Flow covers your monthly spend.</div>
+              <div class="pcard" style="text-align:left">
+                <div class="pstitle">Updated balances</div>
+                <div class="arow2" style="margin-bottom:3px"><span class="aname">Flow</span><span class="ptg b">1.85% p.a.</span></div>
+                <div style="font-size:14px;font-weight:600;color:#1c1c1e;font-family:'DM Mono',monospace;margin-bottom:10px">$1,350.00</div>
+                <div class="arow2" style="margin-bottom:3px"><span class="aname">Grow</span><span class="ptg g">4.85% p.a.</span></div>
+                <div style="font-size:14px;font-weight:600;color:#1c1c1e;font-family:'DM Mono',monospace">$2,492.00</div>
+              </div>
+              <div><span class="pchip">🔔 Monthly reminder on</span><span class="pchip">✓ Eligibility maintained</span></div>
+              <button class="pbtn" style="margin-top:12px" onclick="pgo(0)">Back to home</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar flow steps -->
+      <div class="proto-sidebar">
+        <div class="proto-flow">
+          <div class="flow-step active" id="fs0" onclick="pgo(0)">
+            <div class="flow-num">Screen 01</div>
+            <div class="flow-name">Home; Salary Trigger</div>
+            <div class="flow-desc">Post-salary credit, a contextual nudge appears showing Flow balance is higher than typical spending needs.</div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step" id="fs1" onclick="pgo(1)">
+            <div class="flow-num">Screen 02</div>
+            <div class="flow-name">Recommendation</div>
+            <div class="flow-desc">Suggested Flow/Grow split based on 3-month spending average + 10% buffer. Fully transparent reasoning shown.</div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step" id="fs2" onclick="pgo(2)">
+            <div class="flow-num">Screen 03</div>
+            <div class="flow-name">Review & Confirm</div>
+            <div class="flow-desc">Transfer summary with full breakdown. User retains control; they confirm before any money moves.</div>
+          </div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-step" id="fs3" onclick="pgo(3)">
+            <div class="flow-num">Screen 04</div>
+            <div class="flow-name">Success + Reminder</div>
+            <div class="flow-desc">Confirms Grow eligibility maintained. Sets monthly reminder for next salary day. Closes the loop.</div>
+          </div>
+        </div>
+        <div class="proto-note">Passive recommendation only; no money moves without explicit user confirmation. Scope: in-app nudge, not automated rebalancing.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- USER RESEARCH SECTION -->
+  <div class="body" style="background:var(--up-white);border-top:2px solid var(--up-border);">
+    <div class="section" style="margin-bottom:0;">
+      <div class="section-header">
+        <div class="section-icon icon-yellow">🧪</div>
+        <div>
+          <div class="section-title">Section E; User Value Validation</div>
+          <div class="section-sub">Hypothesis testing via structured user research · AI-simulated interviews</div>
+        </div>
+      </div>
+
+      <!-- Transparency notice -->
+      <div style="background:#FFFBE6;border:1px solid #FFE066;border-radius:10px;padding:13px 16px;margin-bottom:20px;display:flex;gap:10px;align-items:flex-start;">
+        <div style="font-size:16px;flex-shrink:0;">⚠️</div>
+        <div style="font-size:12px;color:#7A6010;line-height:1.6;">
+          <strong style="color:#5A4000;">Research method transparency:</strong> Interviews below were AI-simulated (Claude) as part of a structured PM discovery exercise; not conducted with real Up Bank users. Findings represent hypothesis testing against plausible user archetypes, not validated user data. Real user interviews with recruited Up Grow Saver users would be required before any build decision. This exercise is included to demonstrate the discovery thinking process.
+        </div>
+      </div>
+
+      <!-- Interview prompt -->
+      <div style="margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--up-text);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span style="background:var(--up-coral);color:#fff;border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700;">PROMPT</span>
+          System prompt used for AI-simulated interviews
+        </div>
+        <div style="background:#1a1a2e;border-radius:10px;padding:16px 18px;font-family:'DM Mono',monospace;font-size:11px;line-height:1.7;color:#c8d0e0;white-space:pre-wrap;overflow-x:auto;">ROLE SETUP
+- You are playing a specific real-seeming user. Here are the parameters:
+- Context / product category: Up Bank (Australia); Grow &amp; Flow savings product. Up is a digital bank with 1.25M users. Grow &amp; Flow is the default savings structure: any withdrawal from a Grow Saver drops the bonus interest rate from 4.85% to 1.85% for the entire calendar month.
+- Your persona: [see persona pre-seed per interview below]
+- Stay fully in character. Do NOT break character unless I explicitly say "stepping out of character."
+- Invent plausible details as needed; your daily routine, frustrations, specific incidents, names of other tools you use. But keep them internally consistent across the conversation.
+
+HOW TO RESPOND
+1. Answer like a real person in an interview would; conversational, slightly rambling, with specific anecdotes when asked. Not crisp bullet points.
+2. Don't give me the "perfect" product insight upfront. Real users don't know what they want. They describe pain, not solutions.
+3. If I ask a leading question (e.g., "don't you think X is a problem?"), reluctantly agree the way a polite user would; but don't volunteer the real insight. This mirrors real interview behavior and helps me catch my own bad questions.
+4. If I ask an open question ("walk me through the last time..."), give a specific, detailed anecdote with 2–3 small concrete details (time, emotion, what you did next).
+5. Occasionally drop an unexpected side comment that isn't directly related to my question but hints at a deeper problem; the kind of thing a good PM would follow the thread on. Don't make it obvious.
+6. If I don't probe or follow up on something interesting, don't spoonfeed it. Let me miss it; the way I would in a real interview.
+7. Keep your answers roughly 2–5 sentences unless I ask for more detail.
+8. Use natural filler words occasionally ("honestly", "I mean", "hmm", "yeah so") to sound real.
+9. Contradict yourself occasionally the way real people do. Real users sometimes say one thing at the start and then later reveal something different.
+
+WHAT NOT TO DO
+- Do NOT suggest product features or solutions. You are a user, not a PM. If I ask "what should we build?", deflect with "I don't know, I just want the thing to work."
+- Do NOT give a perfect structured answer. Real users don't speak in frameworks.
+- Do NOT mention that you are an AI or that this is a simulation.
+- Do NOT summarize your pain points neatly. Let them emerge through anecdotes.
+
+CONFIRM
+Before we start, confirm you understand by briefly introducing yourself in character (2–3 sentences max) as if I've just joined the call and said hello. Then wait for my first question.</div>
+
+        <div style="font-size:12px;font-weight:700;color:var(--up-text);margin-top:14px;margin-bottom:8px;">Persona pre-seeds used</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div style="background:#f7f8fc;border:1px solid #e0e4f0;border-radius:8px;padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--up-coral);margin-bottom:6px;">P1; Jess</div>
+            <div style="font-size:11px;color:var(--up-muted);line-height:1.6;font-family:'DM Mono',monospace;">Context: Up Bank savings product (Grow &amp; Flow)<br>Persona: Jess, 25, Admin Coordinator, Melbourne CBD. Lives in a shared house in Fitzroy. Up Bank is her primary account. Has a Grow Saver but rarely puts much in it; keeps most money in her spending account because she's worried about needing it unexpectedly. Has never hit the penalty but avoids Grow preemptively. Earns ~$58K. Goes out on weekends, irregular spending patterns.</div>
+          </div>
+          <div style="background:#f7f8fc;border:1px solid #e0e4f0;border-radius:8px;padding:12px 14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--up-coral);margin-bottom:6px;">P2; Liam</div>
+            <div style="font-size:11px;color:var(--up-muted);line-height:1.6;font-family:'DM Mono',monospace;">Context: Up Bank savings product (Grow &amp; Flow)<br>Persona: Liam, 27, Sales Executive, Sydney. Renting in Surry Hills. Up Bank is his primary account. Had a Grow Saver, was actively saving into it, hit the withdrawal penalty once when a large bill came in unexpectedly. Believed the penalty was permanent; stopped using Grow entirely after that. Now keeps everything in Flow. Earns ~$75K base + commission.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Initial hypotheses -->
+      <table class="brief-table" style="margin-bottom:16px;">
+        <tr>
+          <td>Hypothesised user</td>
+          <td>Gen Z users aged 23–32, early-career, renting in metro suburbs (Melbourne, Sydney, Brisbane). Up Bank primary account. Have a Grow Saver but either avoid it preemptively or have withdrawn at least once; both patterns result in not earning the 4.85% bonus rate.</td>
+        </tr>
+        <tr>
+          <td>Hypothesised problem</td>
+          <td>Withdrawing from Grow Saver drops the bonus rate from 4.85% to 1.85%; creating decision paralysis around how much to save vs. keep accessible. Users cannot predict spending reliably, so they avoid Grow entirely or withdraw reactively and lose the bonus. A single penalty event often triggers permanent disengagement.</td>
+        </tr>
+        <tr>
+          <td>Hypothesised goal</td>
+          <td>Help users confidently allocate the right amount to Grow without risking the bonus rate; so they earn more interest while maintaining the liquidity they actually need day-to-day.</td>
+        </tr>
+      </table>
+
+      <!-- Two profiles -->
+      <div style="font-size:13px;font-weight:700;color:var(--up-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;">Interview Profiles Tested</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;">
+        <div style="background:var(--up-blue-pale);border:1px solid #C8E0FF;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:700;color:#1A4F8A;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Profile 1; Reluctant Saver</div>
+          <div style="font-size:13px;font-weight:600;color:var(--up-text);margin-bottom:4px;">Jess, 25 · Admin Coordinator · Melbourne</div>
+          <div style="font-size:12px;color:var(--up-muted);line-height:1.6;">Earns ~$65K. Grow Saver with ~$200. Keeps ~$3K in Flow. Runs ING savings account in parallel. <strong>Has never hit the Grow penalty</strong>: avoids Grow preemptively out of fear.</div>
+        </div>
+        <div style="background:var(--up-coral-pale);border:1px solid #FFD0C8;border-radius:12px;padding:14px 16px;">
+          <div style="font-size:10px;font-weight:700;color:#C04030;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Profile 2; Accidental Withdrawer</div>
+          <div style="font-size:13px;font-weight:600;color:var(--up-text);margin-bottom:4px;">Liam, 27 · Sales Executive · Sydney</div>
+          <div style="font-size:12px;color:var(--up-muted);line-height:1.6;">Earns ~$75K. Had Grow Saver with ~$1,200. Hit the penalty once after an unexpected car repair. Did not know the rate resets monthly; believed penalty was permanent. <strong>Stopped using Grow entirely</strong> after first withdrawal event.</div>
+        </div>
+      </div>
+
+      <!-- Key findings -->
+      <div style="font-size:13px;font-weight:700;color:var(--up-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;">Key Observations</div>
+      <table class="brief-table" style="margin-bottom:16px;">
+        <tr>
+          <td style="width:130px;">Finding 1<br><span style="font-size:10px;font-weight:500;color:var(--up-green);background:var(--up-green-pale);padding:2px 6px;border-radius:4px;">Supports</span></td>
+          <td>"I don't really put much in Grow. Like, what if I need it? I'd rather just keep it where I can get to it without stressing."; Jess (P1). Avoidance driven by fear of losing bonus, not lack of savings intent.</td>
+        </tr>
+        <tr>
+          <td>Finding 2<br><span style="font-size:10px;font-weight:500;color:#7A6010;background:var(--up-yellow-pale);padding:2px 6px;border-radius:4px;">New discovery</span></td>
+          <td>P1 did not know the specific rates (4.85% vs 1.85%) or that the penalty resets monthly. <strong>Fear of the penalty is disproportionate to the actual mechanic</strong>: uncertainty amplifies avoidance beyond what the penalty warrants. Some avoidance could be resolved with plain-language explanation alone, without a full recommendation engine.</td>
+        </tr>
+        <tr>
+          <td>Finding 3<br><span style="font-size:10px;font-weight:500;color:#7A6010;background:var(--up-yellow-pale);padding:2px 6px;border-radius:4px;">New discovery</span></td>
+          <td>P1 runs an ING savings account in parallel; using it as a liquidity buffer that Grow could theoretically provide. <strong>Competitor leakage is already active and silent.</strong> Up is losing deposit share without user churn.</td>
+        </tr>
+        <tr>
+          <td>Finding 4<br><span style="font-size:10px;font-weight:500;color:var(--up-green);background:var(--up-green-pale);padding:2px 6px;border-radius:4px;">Strongest signal</span></td>
+          <td>When asked what she wishes savings could do, P1 said unprompted: <strong>"Just tell me how much is actually safe to put away; based on what I usually spend."</strong> Direct validation of Smart Allocation Advisor concept before any feature was described to her.</td>
+        </tr>
+        <tr>
+          <td>Finding 5<br><span style="font-size:10px;font-weight:500;color:#C04030;background:var(--up-coral-pale);padding:2px 6px;border-radius:4px;">Contradicts brief</span></td>
+          <td>P2 believed the penalty was permanent; did not know the rate resets at month-end. One withdrawal event triggered total disengagement: <strong>"What's the point if I'll just lose it again."</strong> The original brief treated this as a single UX confusion problem. Research reveals it is two compounding problems.</td>
+        </tr>
+      </table>
+
+      <!-- Problem clusters -->
+      <div style="font-size:13px;font-weight:700;color:var(--up-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;">Problem Clusters; Across Both Profiles</div>
+      <table class="brief-table" style="margin-bottom:16px;">
+        <tr>
+          <td>Allocation uncertainty</td>
+          <td>Core cluster. Confirmed across both profiles. Users cannot predict spending, so cannot safely commit to Grow without risking the bonus. <strong>This is the primary job-to-be-done the feature must solve.</strong></td>
+        </tr>
+        <tr>
+          <td>Comprehension failure</td>
+          <td>Surfaced in both interviews without prompting. Users do not understand the monthly reset or exact penalty rates. Fear of penalty is disproportionate to actual mechanic. Most users believe the penalty is permanent or undefined. <strong>Solving allocation without fixing comprehension leaves P2-type users permanently disengaged.</strong></td>
+        </tr>
+        <tr>
+          <td>Sustained disengagement</td>
+          <td>P2 stopped trying to maintain Grow after first withdrawal. Not a one-time loss; the penalty creates learned helplessness. <strong>This is not captured in the original brief's success metrics.</strong> New metric required: post-disengagement recovery rate.</td>
+        </tr>
+        <tr>
+          <td>Competitor leakage</td>
+          <td>ING active in P1. Credit card as bridge inferred from P2 workaround behaviour. Workarounds are sticky and functional. <strong>Up is losing deposit share silently</strong>: without user churn showing up in retention metrics.</td>
+        </tr>
+      </table>
+
+      <!-- Refined scope -->
+      <div style="font-size:13px;font-weight:700;color:var(--up-text);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.3px;">Refined Feature Scope (Post-Research)</div>
+      <table class="brief-table" style="margin-bottom:16px;">
+        <tr>
+          <td>Original scope</td>
+          <td>Smart Allocation Advisor; spending-based Flow/Grow recommendation with 10% buffer.</td>
+        </tr>
+        <tr>
+          <td>Refined scope</td>
+          <td>
+            <p><strong>(1) Smart Allocation Advisor</strong>: spending-based Grow recommendation. Unchanged.</p>
+            <p><strong>(2) Companion reset nudge</strong>: plain-language monthly reset explanation surfaced at the point of withdrawal. New addition to address comprehension failure and post-penalty disengagement.</p>
+          </td>
+        </tr>
+        <tr>
+          <td>New metric added</td>
+          <td><strong>Post-disengagement recovery rate</strong>: % of users who hit a Grow penalty and re-engage with Grow the following month. This was absent from the original brief's success metrics but is the most direct indicator of whether the comprehension fix works for P2-type users.</td>
+        </tr>
+      </table>
+
+      <!-- Go/No-Go -->
+      <div style="background:var(--up-green-pale);border:1px solid #A8EABC;border-radius:12px;padding:16px 20px;display:flex;gap:14px;align-items:flex-start;">
+        <div style="width:52px;height:52px;border-radius:50%;background:#2ECC71;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#0E6E35;margin-bottom:4px;">GO; with scope refinement</div>
+          <div style="font-size:12px;color:#1A5C30;line-height:1.6;">Both simulated interviews independently confirmed allocation uncertainty as the core problem. P1 unpromptedly articulated the Smart Allocation Advisor value proposition before the concept was introduced. Play Store data (21 of 42 negative reviews cite Grow/Flow confusion) provides population-level corroboration. <strong>Before build:</strong> run 6–10 real interviews with recruited P2 and P3 profiles across Melbourne, Sydney and Brisbane to confirm churn severity, test whether the comprehension fix alone changes willingness to re-engage with Grow, and validate the allocation recommendation UX before engineering begins.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- APPENDIX -->
+  <div class="appendix">
+    <div class="appendix-title">Section F; Reference Sources</div>
+    <div class="ref-link">
+      <div class="ref-num">1</div>
+      <div class="ref-text">Bendigo Bank Half Yearly Report; Pages 9 & 33 (Grow & Flow deposit impact, $190M figure)<br><a href="https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/investor-presentations/2026-half-year-results-presentation.pdf">bendigoadelaide.com.au · 2026 Half Year Results Presentation</a></div>
+    </div>
+    <div class="ref-link">
+      <div class="ref-num">2</div>
+      <div class="ref-text">Bendigo & Adelaide Bank 2025 Annual Report; Mission, Vision, Company Strategy<br><a href="https://www.bendigoadelaide.com.au/globalassets/documents/bendigoadelaide/investorcentre/results-and-reporting/annual-reviews/annual-financial-report-2025.pdf">bendigoadelaide.com.au · Annual Financial Report 2025</a></div>
+    </div>
+    <div class="ref-link">
+      <div class="ref-num">3</div>
+      <div class="ref-text">Google Play Store; Up Easy Money user reviews (sampled May 2026, 2-star and 3-star ratings)<br><a href="https://play.google.com/store/apps/details?id=au.com.up.money&hl=en">play.google.com · Up; Easy Money</a></div>
+    </div>
+    <div class="ref-link">
+      <div class="ref-num">4</div>
+      <div class="ref-text">Reddit community sentiment; r/upbanking, r/AusFinance (Grow & Flow friction threads, sampled May 2026)</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">Smart Allocation Advisor · Pranjal Dube · Up Bank / Ferocia</div>
+    <div class="footer-right">Senior PM Application · May 2026</div>
+  </div>
+
+</div>
+
+<script>
+var PL = ['Screen 1 of 4: Home','Screen 2 of 4: Recommendation','Screen 3 of 4: Review & confirm','Screen 4 of 4: Success'];
+function pgo(n) {
+  for(var i=0;i<4;i++){
+    document.getElementById('ps'+i).className='pscr'+(i===n?' on':'');
+    document.getElementById('d'+i).className='pdot'+(i===n?' on':'');
+    document.getElementById('fs'+i).className='flow-step'+(i===n?' active':'');
+  }
+  document.getElementById('plbl').textContent=PL[n];
+}
+</script>
+</body>
+</html>
